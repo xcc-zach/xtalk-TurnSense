@@ -89,11 +89,8 @@
   <a href="https://huggingface.co/brgroup/TurnSense/blob/main/image/PR_new.mp4">TurnSense 演示视频请点击链接查看</a>
 </p>
 
-<div align="center">
-  <img src="./image/TurnSense.svg" alt="TurnSense 三分类示意图" width="820"/>
-</div>
 
-<br/>
+
 
 TurnSense 将用户输入划分为三种语义状态：
 
