@@ -89,6 +89,10 @@ Traditional approaches typically rely on a simple binary classification — "fin
 
 <br/>
 
+<p align="center">
+  <a href="https://huggingface.co/brgroup/TurnSense/blob/main/image/PR_new.mp4">Click here to view the TurnSense demo video</a>
+</p>
+
 TurnSense classifies user input into three semantic states:
 
 | State | Description | Example |
