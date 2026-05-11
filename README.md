@@ -85,14 +85,20 @@
 
 <br/>
 
-## 🎬 Demo
+<div align="center">
+
+## 🎬 演示视频
+
+</div>
 
 https://github.com/user-attachments/assets/72e49e46-9fab-4613-add5-eafab79357af
 
-If the video does not preview automatically, please open the link directly.
+<div align="center">
+
+</div>
 
 <p align="center">
-  <a href="https://huggingface.co/brgroup/TurnSense/blob/main/image/PR_new.mp4">TurnSense 演示视频请点击链接查看</a>
+  <a href="https://huggingface.co/brgroup/TurnSense/blob/main/image/PR_new.mp4">TurnSense 高清演示视频请点击链接查看</a>
 </p>
 
 
