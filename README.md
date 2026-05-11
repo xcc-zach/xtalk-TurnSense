@@ -86,14 +86,16 @@
 <br/>
 
 <div align="center">
-  <video src="https://github.com/Bairong-Xdynamics/TurnSense/raw/main/image/PR_new-1.mov"
+  <!-- Hugging Face 高清视频（保持不变） -->
+  <video src="https://github.com/Bairong-Xdynamics/blob/main/image/PR_new-1.mp4"
          width="820"
-         height="400"
+         height="360"
          controls
          muted
          loop
-         autoplay
          playsinline>
+    浏览器不支持视频，请点击：
+    <a href="https://huggingface.co/brgroup/TurnSense/resolve/main/image/PR_new.mp4">GitHub 查看高清视频</a>
   </video>
 </div>
 
