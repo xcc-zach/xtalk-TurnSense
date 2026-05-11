@@ -86,7 +86,7 @@
 <br/>
 
 <div align="center">
-  <video src="./image/PR_new-1.mp4" width="820" height="360" controls muted loop playsinline></video>
+  <video src="https://github.com/Bairong-Xdynamics/TurnSense/raw/main/image/PR_new-1.mp4" width="820" height="360" controls muted loop playsinline></video>
 </div>
 
 <p align="center">
