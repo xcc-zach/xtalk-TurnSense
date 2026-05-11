@@ -90,16 +90,10 @@
 ## 🎬 演示视频
 
 <p align="center">
-  <a href="https://github.com/user-attachments/assets/72e49e46-9fab-4613-add5-eafab79357af">
+  <a href="https://huggingface.co/brgroup/TurnSense/blob/main/image/PR_new.mp4">
     <img src="./image/PR视频-封面.jpg" width="820" alt="TurnSense demo video">
   </a>
 </p>
-
-<p align="center">
-  <a href="https://huggingface.co/brgroup/TurnSense/blob/main/image/PR_new.mp4">TurnSense 高清演示视频请点击链接查看</a>
-</p>
-
-
 
 
 TurnSense 将用户输入划分为三种语义状态：
