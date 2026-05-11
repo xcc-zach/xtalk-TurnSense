@@ -85,6 +85,19 @@
 
 <br/>
 
+<div align="center">
+  <video src="https://github.com/Bairong-Xdynamics/TurnSense/resolve/main/image/PR_new.mov" 
+         width="820" 
+         height="400" 
+         controls 
+         muted 
+         loop 
+         autoplay 
+         playsinline>
+  </video>
+</div>
+
+
 <p align="center">
   <a href="https://huggingface.co/brgroup/TurnSense/blob/main/image/PR_new.mp4">TurnSense 演示视频请点击链接查看</a>
 </p>
