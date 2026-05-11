@@ -85,7 +85,9 @@
 
 <br/>
 
-
+<div align="center">
+  <video src="./image/PR_new-1.mp4" width="820" height="360" controls muted loop playsinline></video>
+</div>
 
 <p align="center">
   <a href="https://huggingface.co/brgroup/TurnSense/blob/main/image/PR_new.mp4">TurnSense 演示视频请点击链接查看</a>
