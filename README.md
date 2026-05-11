@@ -91,7 +91,7 @@
 
 <p align="center">
   <a href="https://github.com/user-attachments/assets/72e49e46-9fab-4613-add5-eafab79357af">
-    <img src="./image/demo-cover.png" width="820" alt="TurnSense demo video">
+    <img src="./image/PR视频-封面.jpg" width="820" alt="TurnSense demo video">
   </a>
 </p>
 
