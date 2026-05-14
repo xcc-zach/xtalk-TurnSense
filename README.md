@@ -94,7 +94,7 @@
     <img src="./image/PR视频-封面.jpg" width="820" alt="TurnSense demo video">
   </a>
 </p>
-
+</div>
 
 TurnSense 将用户输入划分为三种语义状态：
 
