@@ -33,6 +33,7 @@
 
 ## 📖 目录
 
+- [News](#-news)
 - [为什么选择 TurnSense](#-为什么选择-turnsense)
 - [项目简介](#-项目简介)
 - [核心特性](#-核心特性)
@@ -43,11 +44,12 @@
 - [引用](#-引用)
 - [问题与交流](#-问题与交流)
 - [许可证](#-许可证)
-
 <br/>
 
 ---
+## 📰 News
 
+- **2026.05**：发布 **TurnSense 1.1**，新增英文增强版本，支持中英文场景下的语义完整度判断能力。模型已发布至 Hugging Face：[brgroup/TurnSense](https://huggingface.co/brgroup/TurnSense)。
 <br/>
 
 ## 🏆 为什么选择 TurnSense
