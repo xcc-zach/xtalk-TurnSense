@@ -6,11 +6,11 @@
 
 # TurnSense
 
-### 🎯 Lightweight · Accurate · Three-Class — Redefining Speech Turn Detection
+### 🎯 轻量 · 精准 · 三分类 — 重新定义语音轮次判别
 
 <br/>
 
-<center><strong>47M Parameters ｜ English & Chinese Turn Detection ｜ F1 up to 96.35% ｜ Invalid Utterance Filtering</strong></center>
+<center><strong>47M 参数 ｜ 中英双语轮次判别 ｜ F1 高达 96.35% ｜ 无效语义过滤</strong></center>
 
 <br/>
 
@@ -23,27 +23,27 @@
 
 <br/>
 
-**Language**: **English** | [中文](./README.md)
+**语言**: [English](./README_en.md) | **中文**
 
 <br/>
 
-> **⭐ If TurnSense is useful to you, please give us a Star!** This helps us continue improving the model and documentation.
+> **⭐ 如果 TurnSense 对你有帮助，请给我们一个 Star！** 这将帮助我们持续改进模型与文档。
 
 <br/>
 
-## 📖 Table of Contents
+## 📖 目录
 
 - [News](#-news)
-- [Why TurnSense](#-why-turnsense)
-- [Introduction](#-introduction)
-- [Core Features](#-core-features)
-- [Model Size Comparison](#-model-size-comparison)
-- [Benchmark Results](#-benchmark-results)
-- [Quick Start](#-quick-start)
-- [Evaluation Guide](#-evaluation-guide)
-- [Citation](#-citation)
-- [Questions and Contact](#-questions-and-contact)
-- [License](#-license)
+- [为什么选择 TurnSense](#-为什么选择-turnsense)
+- [项目简介](#-项目简介)
+- [核心特性](#-核心特性)
+- [模型参数量对比](#-模型参数量对比)
+- [基准测试结果](#-基准测试结果)
+- [快速开始](#-快速开始)
+- [评测说明](#-评测说明)
+- [引用](#-引用)
+- [问题与交流](#-问题与交流)
+- [许可证](#-许可证)
 
 <br/>
 
@@ -51,22 +51,22 @@
 
 ## 📰 News
 
-- **2026.05.22**: **TurnSense 1.1** is released. This version focuses on improving English turn-taking detection, especially the distinction between `complete` and `incomplete` utterances. The model is available on Hugging Face: [brgroup/TurnSense](https://huggingface.co/brgroup/TurnSense).
+- **2026.05.22**：发布 **TurnSense 1.1**。该版本重点增强英文轮次判别能力，尤其提升 `complete` 与 `incomplete` 语义状态的区分能力。模型已发布至 Hugging Face：[brgroup/TurnSense](https://huggingface.co/brgroup/TurnSense)。
 
 <br/>
 
-## 🏆 Why TurnSense
+## 🏆 为什么选择 TurnSense
 
 <div align="center">
 
-| Dimension | TurnSense Performance |
+| 维度 | TurnSense 表现 |
 | :---: | :---: |
-| 🎯 **Accuracy** | F1 **96.35%** on `easyturn_real_test_ZH` — best among comparable models |
-| 🌐 **Language Support** | TurnSense 1.1 improves English turn detection and supports both Chinese and English scenarios |
-| 📦 **Model Size** | Only **47M** parameters, with an INT8 version of about **50MB** |
-| 🧠 **Classification Ability** | The first open-source model to natively support **complete / incomplete / invalid** three-class detection |
-| 🚫 **Invalid Filtering** | Invalid utterance F1 reaches **94.34%**, effectively reducing noise-triggered false activations |
-| 🤗 **Open-Source Friendly** | Provides FP32 / INT8 ONNX models, ready to use out of the box |
+| 🎯 **准确率** | 在 `easyturn_real_test_ZH` 上 F1 达 **96.35%** — 同类模型中表现最优 |
+| 🌐 **语言支持** | TurnSense 1.1 增强英文轮次判别能力，同时支持中文与英文场景 |
+| 📦 **模型体积** | 仅 **47M** 参数，INT8 版本约 **50MB** |
+| 🧠 **分类能力** | 首个原生支持 **complete / incomplete / invalid** 三分类检测的开源模型 |
+| 🚫 **无效过滤** | 无效语义 F1 达 **94.34%**，有效降低噪声误触发 |
+| 🤗 **开源友好** | 提供 FP32 / INT8 ONNX 模型，开箱即用 |
 
 </div>
 
@@ -76,23 +76,23 @@
 
 <br/>
 
-## 📌 Introduction
+## 📌 项目简介
 
-**TurnSense** is a **three-class semantic turn detection model** designed for human-machine speech interaction. It focuses on a core problem in conversational systems:
+**TurnSense** 是一个面向人机语音交互场景的 **三分类语义轮次判别模型**。它专注解决对话系统中的一个核心问题：
 
-> **Should the system respond immediately while the user is speaking, or should it keep waiting?**
+> **用户说话过程中，系统应该立即响应，还是继续等待？**
 
-Traditional approaches usually perform only binary "end-of-turn" detection. **TurnSense goes further** by jointly modeling semantic completeness and invalid input detection. This helps systems achieve more natural turn-taking in complex real-world scenarios and significantly reduces premature interruption, overlapping speech, and invalid triggers.
+传统方案通常只做二分类的“是否结束”判断。**TurnSense 更进一步**，同时建模语义完整度与无效输入识别，帮助系统在复杂真实场景下实现更自然的轮次衔接，并显著减少误打断、抢话和无效触发。
 
 <div align="center">
-  <img src="./image/TurnSense.svg" alt="TurnSense three-class diagram" width="820"/>
+  <img src="./image/TurnSense.svg" alt="TurnSense 三分类示意图" width="820"/>
 </div>
 
 <br/>
 
 <div align="center">
 
-## 🎬 Demo Video
+## 🎬 演示视频
 
 <p align="center">
   <a href="https://huggingface.co/brgroup/TurnSense/blob/main/image/PR_new.mp4">
@@ -100,17 +100,17 @@ Traditional approaches usually perform only binary "end-of-turn" detection. **Tu
   </a>
 </p>
 
-TurnSense classifies user input into three semantic states:
+TurnSense 将用户输入划分为三种语义状态：
 
-| State | Meaning | Example |
+| 状态 | 含义 | 示例 |
 | :---: | :--- | :--- |
-| ✅ **Complete** | The user's expression forms a complete intent, and the system can respond | `"Please check tomorrow's weather in Shanghai."` |
-| ⏳ **Incomplete** | The user's expression is not finished and may continue after a pause or truncation | `"I want to ask about that order from yesterday..."` |
-| 🔇 **Invalid** | The input does not form valid semantic content and should not trigger a response | `"...(continuous noise / nonverbal vocalization)"` |
+| ✅ **完整语义 (complete)** | 用户表达已形成完整意图，系统可以响应 | `"帮我查一下明天上海天气。"` |
+| ⏳ **不完整语义 (incomplete)** | 用户表达尚未完成，可能在停顿或截断后继续 | `"我想问一下那个订单就是昨天..."` |
+| 🔇 **无效语义 (invalid)** | 输入不构成有效语义，不应触发系统响应 | `"...（持续噪声 / 非语义发声）"` |
 
 </div>
 
-These three labels allow the system to determine not only **"whether it should take the turn"**, but also **"whether the input is worth responding to"**. This improves interaction naturalness and system stability in voice assistants, real-time calls, intelligent customer service, and other speech interaction scenarios.
+这三类标签让系统不仅能判断 **“是否该接话”**，还能识别 **“输入是否值得响应”**，从而在语音助手、实时通话、智能客服等语音交互场景中提升交互自然度与系统稳定性。
 
 <br/>
 
@@ -118,41 +118,41 @@ These three labels allow the system to determine not only **"whether it should t
 
 <br/>
 
-## ✨ Core Features
+## ✨ 核心特性
 
-### 🧠 Semantic-Level Three-Class Detection
+### 🧠 语义级三分类
 
-TurnSense jointly models `complete / incomplete / invalid` states. Compared with traditional binary turn detection, this is closer to real conversational behavior. It is also the only open-source solution that natively supports invalid semantic detection.
+TurnSense 同时建模 `complete / incomplete / invalid` 三种状态。相比传统二分类轮次检测，这一设计更贴近真实对话行为，也是目前唯一原生支持无效语义检测的开源方案。
 
-### 🌐 TurnSense 1.1: Enhanced English Capability
+### 🌐 TurnSense 1.1：英文能力增强
 
-TurnSense 1.1 keeps the `complete / incomplete / invalid` three-class capability while focusing on improving semantic completeness detection in English scenarios.
+TurnSense 1.1 在保持 `complete / incomplete / invalid` 三分类能力的基础上，重点增强英文场景下的语义完整度判断能力。
 
-Compared with the initial version, TurnSense 1.1 is better suited for bilingual voice assistants, English customer service, real-time meeting transcription, and cross-lingual human-machine interaction. It more reliably distinguishes complete English intent from unfinished English utterances.
+相比初版，TurnSense 1.1 更适合用于双语语音助手、英文客服、实时会议转写与跨语言人机交互场景，能够更稳定地区分英文表达中的完整意图与未完成表达。
 
-### 📦 Lightweight Deployment
+### 📦 轻量化部署
 
-TurnSense maintains a lightweight design with about **47M** parameters and provides FP32 / INT8 ONNX versions, making it easy to integrate into CPU environments and edge deployment scenarios.
+TurnSense 保持轻量化设计，参数量约 **47M**，并提供 FP32 / INT8 ONNX 版本，便于集成到 CPU 环境与边缘部署场景中。
 
-### 🎯 Strong Accuracy
+### 🎯 精度表现强
 
-On `easyturn_real_test_ZH` with 300 samples, TurnSense achieves **F1 96.35%** for `complete` and **F1 96.32%** for `incomplete`. On `semantic_test_ZH` with 2000 samples, it achieves **F1 92.30%** for `complete` and **F1 91.62%** for `incomplete`, reaching best or second-best performance among comparable models.
+在 `easyturn_real_test_ZH` 300 条测试样本上，TurnSense 在 `complete` 上取得 **F1 96.35%**，在 `incomplete` 上取得 **F1 96.32%**。在 `semantic_test_ZH` 2000 条测试样本上，`complete` F1 达 **92.30%**，`incomplete` F1 达 **91.62%**，达到同类模型中的最优或次优水平。
 
-### 🚫 Invalid Input Filtering
+### 🚫 无效输入过滤
 
-On the NonverbalVocalization dataset, invalid utterance detection reaches **100% precision**, **90.37% recall**, and **94.34% F1**, effectively suppressing false activations caused by nonverbal vocalizations and noise.
+在 NonverbalVocalization 数据集上，无效语义检测达到 **100% precision**、**90.37% recall** 和 **94.34% F1**，能够有效抑制非语义发声和噪声导致的误触发。
 
-### ⚖️ More Robust Turn-Taking Decisions
+### ⚖️ 更稳健的轮次决策
 
-TurnSense balances precision and recall in semantically ambiguous, paused, or colloquial speech scenarios, reducing premature responses and missed responses.
+TurnSense 在语义模糊、停顿、口语化表达等场景下兼顾 precision 与 recall，减少过早响应和漏响应。
 
-### 📊 Reproducible Evaluation Pipeline
+### 📊 可复现评测体系
 
-The project includes a complete evaluation workflow and scripts, supporting unified metric comparison and performance regression analysis to ensure reproducibility.
+项目提供完整的评测流程与脚本，支持统一指标对比与性能回归分析，确保实验结果可复现。
 
-### 🤗 Open-Source Friendly and Ready to Use
+### 🤗 开源友好，即插即用
 
-TurnSense provides a standardized repository structure and FP32 / INT8 ONNX models. Installation and inference can be completed within minutes.
+TurnSense 提供标准化仓库结构与 FP32 / INT8 ONNX 模型，从安装到推理只需几分钟。
 
 <br/>
 
@@ -160,11 +160,11 @@ TurnSense provides a standardized repository structure and FP32 / INT8 ONNX mode
 
 <br/>
 
-## 📐 Model Size Comparison
+## 📐 模型参数量对比
 
 <div align="center">
 
-| Model | Parameters | Three-Class | Link |
+| 模型 | 参数量 | 三分类 | 链接 |
 | :--- | :---: | :---: | :--- |
 | TEN-Turn | **7B** | ❌ | [TEN-framework/TEN_Turn_Detection](https://huggingface.co/TEN-framework/TEN_Turn_Detection) |
 | Easy-Turn | 850M | ❌ | [ASLP-lab/Easy-Turn](https://huggingface.co/ASLP-lab/Easy-Turn) |
@@ -175,7 +175,7 @@ TurnSense provides a standardized repository structure and FP32 / INT8 ONNX mode
 
 </div>
 
-> 💡 With only **47M** parameters, TurnSense provides native three-class detection and achieves a strong balance between accuracy and model size.
+> 💡 TurnSense 以仅 **47M** 的参数量实现原生三分类能力，在精度与模型体积之间取得了较好的平衡。
 
 <br/>
 
@@ -183,17 +183,17 @@ TurnSense provides a standardized repository structure and FP32 / INT8 ONNX mode
 
 <br/>
 
-## 📊 Benchmark Results
+## 📊 基准测试结果
 
-> The following results cover Chinese, English, and invalid-utterance test sets. Chinese results mainly demonstrate the capability of the initial TurnSense version, while English results show the enhanced performance of TurnSense 1.1.
+> 以下结果覆盖中文、英文与无效语义测试集。中文结果主要展示 TurnSense 初版能力，英文结果用于展示 TurnSense 1.1 的增强效果。
 
 <br/>
 
-### 📋 easyturn_real_test_ZH（300 samples）
+### 📋 easyturn_real_test_ZH（300 条）
 
-> Data source: real samples from [Easy-Turn-Testset](https://huggingface.co/datasets/ASLP-lab/Easy-Turn-Testset)
+> 数据来源：[Easy-Turn-Testset](https://huggingface.co/datasets/ASLP-lab/Easy-Turn-Testset) 真实数据样本
 
-| Model | P (complete) | R (complete) | **F1 (complete)** | P (incomplete) | R (incomplete) | **F1 (incomplete)** | p50 Latency | p90 Latency |
+| 模型 | P (complete) | R (complete) | **F1 (complete)** | P (incomplete) | R (incomplete) | **F1 (incomplete)** | p50 延迟 | p90 延迟 |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | Easy-Turn | 97.26% | 94.67% | 95.95% | 94.81% | 97.33% | 96.05% | 183.87 (GPU) | 300.37 (GPU) |
 | Smart-Turn-v3 | 64.97% | 76.67% | 70.34% | 71.54% | 58.67% | 64.47% | 36.84 | 39.10 |
@@ -202,15 +202,15 @@ TurnSense provides a standardized repository structure and FP32 / INT8 ONNX mode
 | NAMO-Turn | 81.53% | 85.33% | 83.39% | 84.62% | 80.67% | 82.59% | 3.60 | 83.44 |
 | **⭐ TurnSense** | 96.03% | **96.67%** | **🏆 96.35%** | **96.64%** | 96.00% | **🏆 96.32%** | 54.65 | 58.00 |
 
-> **🔍 Key finding:** TurnSense achieves the highest F1 for both `complete` and `incomplete`, and is the only model that reaches F1 > 96% with CPU p50 latency below 60ms.
+> **🔍 关键发现：** TurnSense 在 `complete` 和 `incomplete` 两类上均取得最高 F1，并且是唯一在 CPU p50 延迟低于 60ms 的同时 F1 超过 96% 的模型。
 
 <br/>
 
-### 📋 semantic_test_ZH（2000 samples）
+### 📋 semantic_test_ZH（2000 条）
 
-> Data source: Chinese test set from [KE-Team/SemanticVAD-Dataset](https://huggingface.co/datasets/KE-Team/SemanticVAD-Dataset)
+> 数据来源：[KE-Team/SemanticVAD-Dataset](https://huggingface.co/datasets/KE-Team/SemanticVAD-Dataset) 中文测试集
 
-| Model | P (complete) | R (complete) | **F1 (complete)** | P (incomplete) | R (incomplete) | **F1 (incomplete)** | p50 Latency | p90 Latency |
+| 模型 | P (complete) | R (complete) | **F1 (complete)** | P (incomplete) | R (incomplete) | **F1 (incomplete)** | p50 延迟 | p90 延迟 |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | Easy-Turn | 78.14% | 98.30% | 87.07% | 97.64% | 70.30% | 81.74% | 183.87 (GPU) | 300.37 (GPU) |
 | Smart-Turn-v3 | 59.25% | 88.10% | 70.85% | 76.80% | 39.40% | 52.08% | 36.84 | 39.10 |
@@ -219,19 +219,19 @@ TurnSense provides a standardized repository structure and FP32 / INT8 ONNX mode
 | NAMO-Turn | 71.48% | 86.70% | 78.36% | 83.10% | 65.40% | 73.20% | 3.60 | 83.44 |
 | **⭐ TurnSense** | **88.96%** | 95.90% | **🏆 92.30%** | 95.55% | **88.00%** | **🏆 91.62%** | 54.65 | 58.00 |
 
-> **🔍 Key finding:** On the larger 2000-sample test set, TurnSense continues to maintain the best F1 performance, demonstrating strong generalization.
+> **🔍 关键发现：** 在 2000 条的大规模测试集上，TurnSense 依然保持最佳 F1 表现，体现出较强的泛化能力。
 
 <br/>
 
-### 📋 TurnSense 1.1 English Enhancement Results
+### 📋 TurnSense 1.1 英文增强结果
 
-> Model download: [Hugging Face - brgroup/TurnSense](https://huggingface.co/brgroup/TurnSense)
+> 模型下载地址：[Hugging Face - brgroup/TurnSense](https://huggingface.co/brgroup/TurnSense)
 
-> TurnSense 1.1 focuses on improving semantic completeness detection in English scenarios. The following results show its complete / incomplete performance on English test sets.
+> TurnSense 1.1 重点增强英文场景下的语义完整度判断能力。以下结果展示其在英文测试集上的 `complete / incomplete` 表现。
 
 #### ten_test_EN
 
-| Model | P (complete) | R (complete) | **F1 (complete)** | P (incomplete) | R (incomplete) | **F1 (incomplete)** |
+| 模型 | P (complete) | R (complete) | **F1 (complete)** | P (incomplete) | R (incomplete) | **F1 (incomplete)** |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | Smart-Turn-v3 | 70.66% | 72.46% | 71.55% | 65.05% | 63.02% | 64.02% |
 | TEN-Turn | **98.61%** | 90.25% | **94.25%** | 89.15% | **98.44%** | **93.56%** |
@@ -241,7 +241,7 @@ TurnSense provides a standardized repository structure and FP32 / INT8 ONNX mode
 
 #### semantic_test_EN
 
-| Model | P (complete) | R (complete) | **F1 (complete)** | P (incomplete) | R (incomplete) | **F1 (incomplete)** |
+| 模型 | P (complete) | R (complete) | **F1 (complete)** | P (incomplete) | R (incomplete) | **F1 (incomplete)** |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | Smart-Turn-v3 | 68.18% | 75.00% | 71.43% | 72.22% | 65.00% | 68.42% |
 | TEN-Turn | **97.98%** | 97.00% | **97.49%** | **97.03%** | **98.00%** | **97.51%** |
@@ -251,15 +251,15 @@ TurnSense provides a standardized repository structure and FP32 / INT8 ONNX mode
 
 <br/>
 
-### 📋 NonverbalVocalization_invalid（728 samples）
+### 📋 NonverbalVocalization_invalid（728 条）
 
-> Data source: OpenSLR [Deeply Nonverbal Vocalization Dataset（SLR99）](https://openslr.elda.org/99/)
+> 数据来源：OpenSLR [Deeply Nonverbal Vocalization Dataset（SLR99）](https://openslr.elda.org/99/)
 
-| Model | R (invalid) |
+| 模型 | R (invalid) |
 | :--- | :---: |
 | **⭐ TurnSense** | **90.37%** |
 
-> **🔍 Key finding:** TurnSense supports invalid semantic detection and can effectively reduce system responses triggered by nonverbal vocalizations or noise.
+> **🔍 关键发现：** TurnSense 支持无效语义检测，能够有效减少非语义发声或噪声触发的系统响应。
 
 <br/>
 
@@ -267,9 +267,9 @@ TurnSense provides a standardized repository structure and FP32 / INT8 ONNX mode
 
 <br/>
 
-## 🚀 Quick Start
+## 🚀 快速开始
 
-### 1. Installation
+### 1. 安装
 
 ```bash
 git clone https://github.com/Bairong-Xdynamics/TurnSense.git
@@ -278,51 +278,51 @@ cd TurnSense
 pip install -U numpy onnxruntime torch librosa soundfile pandas scikit-learn huggingface_hub
 ```
 
-### 2. Download Model Weights
+### 2. 获取模型权重
 
-TurnSense model weights are available on Hugging Face: [brgroup/TurnSense](https://huggingface.co/brgroup/TurnSense)
+TurnSense 模型权重已发布在 Hugging Face：[brgroup/TurnSense](https://huggingface.co/brgroup/TurnSense)
 
-| Version | Description | Use Case |
+| 版本 | 说明 | 适用场景 |
 | :--- | :--- | :--- |
-| TurnSense | Initial three-class turn detection model | Chinese turn detection and invalid utterance filtering |
-| TurnSense 1.1 | English-enhanced version | English / Chinese-English mixed turn detection |
-| FP32 | Full-precision version | Accuracy-first scenarios |
-| INT8 | Quantized version | Deployment-first scenarios |
+| TurnSense | 初版三分类轮次判别模型 | 中文轮次判别与无效语义过滤 |
+| TurnSense 1.1 | 英文增强版本 | 英文 / 中英混合轮次判别 |
+| FP32 | 全精度版本 | 精度优先场景 |
+| INT8 | 量化版本 | 部署优先场景 |
 
-**Download options:**
+**下载方式：**
 
-**Option 1: Automatic download (recommended)**
+**方式一：自动下载（推荐）**
 
-The inference script includes Hugging Face download logic and will automatically download and cache the model during the first run.
+推理脚本内置 Hugging Face 下载逻辑，首次运行时会自动下载并缓存模型。
 
-**Option 2: Git LFS**
+**方式二：Git LFS**
 
 ```bash
 git lfs install
 git clone https://huggingface.co/brgroup/TurnSense
 ```
 
-**Option 3: Hugging Face Hub**
+**方式三：Hugging Face Hub**
 
 ```python
 from huggingface_hub import snapshot_download
 snapshot_download(repo_id="brgroup/TurnSense")
 ```
 
-### 3. Inference
+### 3. 推理
 
 ```bash
 python infer.py
 ```
 
-Example output:
+示例输出：
 
 ```text
 Loading model from brgroup/TurnSense...
-Running inference on: "I want to ask about that order from yesterday..."
+Running inference on: "我想问一下那个订单就是昨天..."
 
 Results:
-  Input: "I want to ask about that order from yesterday..."
+  Input: "我想问一下那个订单就是昨天..."
   TurnSense Detection Result: "incomplete"
 ```
 
@@ -332,43 +332,43 @@ Results:
 
 <br/>
 
-## 🧪 Evaluation Guide
+## 🧪 评测说明
 
-### 1. Evaluation Pipeline
+### 1. 评测流程
 
-1. Read test datasets in `.jsonl` format.
-2. Warm up each model first. The default value is `warmup_iters=20`.
-3. Run inference sample by sample and collect classification and performance metrics.
-4. Automatically export summary reports and detailed result files.
+1. 读取 `.jsonl` 格式的测试数据集。
+2. 每个模型先进行预热，默认参数为 `warmup_iters=20`。
+3. 逐样本推理，并统计分类指标与性能指标。
+4. 自动导出汇总报告和详细结果文件。
 
-Output files include:
+输出文件包括：
 
-| File | Description |
+| 文件 | 说明 |
 | :--- | :--- |
-| `report.md` | Summary evaluation report |
-| `results.json` | Structured evaluation results |
-| `config.json` | Evaluation configuration |
-| `per_sample__*.jsonl` | Per-sample prediction results |
+| `report.md` | 汇总评测报告 |
+| `results.json` | 结构化评测结果 |
+| `config.json` | 评测配置 |
+| `per_sample__*.jsonl` | 逐样本预测结果 |
 
-### 2. Data Format Requirements（JSONL）
+### 2. 数据格式要求（JSONL）
 
-Each line should be a JSON object containing at least the following fields:
+每一行应为一个 JSON 对象，至少包含以下字段：
 
-| Field | Description |
+| 字段 | 说明 |
 | :--- | :--- |
-| `audio_path` | Path to the audio file |
-| `text` | Text content |
-| `label` | Label: `complete` / `incomplete` / `invalid` |
+| `audio_path` | 音频文件路径 |
+| `text` | 文本内容 |
+| `label` | 标签：`complete` / `incomplete` / `invalid` |
 
-Example:
+示例：
 
 ```jsonl
-{"audio_path":"/001.wav","text":"Please check tomorrow's weather in Shanghai.","label":"complete"}
-{"audio_path":"/002.wav","text":"I want to ask about that order from yesterday...","label":"incomplete"}
-{"audio_path":"/003.wav","text":"uh... hmm... continuous noise","label":"invalid"}
+{"audio_path":"/001.wav","text":"帮我查一下明天上海天气。","label":"complete"}
+{"audio_path":"/002.wav","text":"我想问一下那个订单就是昨天...","label":"incomplete"}
+{"audio_path":"/003.wav","text":"啊... 嗯... 持续噪声","label":"invalid"}
 ```
 
-### 3. Run Evaluation
+### 3. 运行评测
 
 ```bash
 python TurnSense/Turn_benchmark/benchmark.py
@@ -380,9 +380,9 @@ python TurnSense/Turn_benchmark/benchmark.py
 
 <br/>
 
-## 📚 Citation
+## 📚 引用
 
-If you use TurnSense in your research or product, please cite:
+如果你在研究或产品中使用了 TurnSense，请引用：
 
 ```bibtex
 @misc{turnsense2026,
@@ -398,23 +398,23 @@ If you use TurnSense in your research or product, please cite:
 
 <br/>
 
-## ❓ Questions and Contact
+## ❓ 问题与交流
 
-If you have questions or suggestions, feel free to contact us through the following channels:
+如果有问题或建议，欢迎通过以下方式联系我们：
 
-| Channel | Contact |
+| 渠道 | 联系方式 |
 | :--- | :--- |
-| 📧 Email | [huan.shen@brgroup.com](mailto:huan.shen@brgroup.com) ・ [yingao.wang@brgroup.com](mailto:yingao.wang@brgroup.com) ・ [wei.zou@brgroup.com](mailto:wei.zou@brgroup.com) |
-| 💬 WeChat | h2538406363 |
-| 👥 WeChat Group | Scan the QR code to join the group<br><img src="image/wechat.jpg" alt="WeChat group QR code" width="220" /> |
+| 📧 邮箱 | [huan.shen@brgroup.com](mailto:huan.shen@brgroup.com) ・ [yingao.wang@brgroup.com](mailto:yingao.wang@brgroup.com) ・ [wei.zou@brgroup.com](mailto:wei.zou@brgroup.com) |
+| 💬 微信 | h2538406363 |
+| 👥 微信群聊 | 扫码加入群聊<br><img src="image/wechat.jpg" alt="微信群聊二维码" width="220" /> |
 | 🐛 Issues | [GitHub Issues](https://github.com/Bairong-Xdynamics/TurnSense/issues) |
 | 🔀 PR | [Pull Requests](https://github.com/Bairong-Xdynamics/TurnSense/pulls) |
 
 <br/>
 
-## 📄 License
+## 📄 许可证
 
-This project is released under the **Apache License 2.0** with additional specific restrictions. See [LICENSE](./LICENSE) for details.
+本项目基于 **Apache License 2.0** 发布，并附加特定限制条件。详情请参见 [LICENSE](./LICENSE)。
 
 <br/>
 
@@ -422,6 +422,6 @@ This project is released under the **Apache License 2.0** with additional specif
 
 <div align="center">
 
-**Built with ❤️ by [Baiji Team](https://github.com/Bairong-Xdynamics)**
+**由 [Baiji Team](https://github.com/Bairong-Xdynamics) 用 ❤️ 打造**
 
 </div>
