@@ -239,17 +239,16 @@ TurnSense 将用户输入划分为三种语义状态：
 | **⭐ TurnSense 1.1 fp32** | 72.31% | 94.00% | 81.74% | 91.43% | 64.00% | 75.29% |
 | **⭐ TurnSense 1.1 int8** | 74.60% | 94.00% | 83.19% | <u>91.89%</u> | 68.00% | 78.16% |
 
-> **🔍 关键发现：** TurnSense 1.1 在英文测试集中相比旧版 TurnSense 更均衡，尤其在 incomplete 类别上取得明显提升，更适合英文或中英混合语音轮次判断场景。
 <br/>
+
 ### 📋 NonverbalVocalization_invalid（728 条）
 
 > 数据来源：OpenSLR [Deeply Nonverbal Vocalization Dataset（SLR99）](https://openslr.elda.org/99/)
 
-| 模型 | P (invalid) | R (invalid) | **F1 (invalid)** |
-| :--- | :---: | :---: | :---: |
-| **⭐ TurnSense** | **100.00%** | **90.37%** |
+| 模型 | R (invalid) |
+| :--- | :---: |
+| **⭐ TurnSense** | **90.37%** |
 
-> **🔍 关键发现：** 目前仅 TurnSense 支持无效语义判别。precision 达到 **100%** 意味着零误报，有效防止噪声触发系统响应。
 
 <br/>
 
