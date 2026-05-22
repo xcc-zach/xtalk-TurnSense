@@ -215,6 +215,7 @@ TurnSense 将用户输入划分为三种语义状态：
 
 ### 📋 TurnSense 1.1 英文增强结果
 
+> 模型下载地址：[Hugging Face - brgroup/TurnSense](https://huggingface.co/brgroup/TurnSense)
 > TurnSense 1.1 重点增强英文场景下的语义完整度判断能力。以下结果展示其在英文测试集上的 complete / incomplete 二分类表现。
 
 #### ten_test_EN
