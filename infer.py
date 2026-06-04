@@ -1,3 +1,4 @@
+import io
 import os
 from typing import List, Dict, Any, Optional
 
@@ -63,6 +64,19 @@ def load_audio(audio_path: str, sr: int, audio_seconds: int, clip_mode: str) -> 
         audio = normalize_audio_shape(audio)
         if loaded_sr != sr:
             audio = librosa.resample(y=audio, orig_sr=loaded_sr, target_sr=sr)
+
+    audio = truncate_audio(audio, n_seconds=audio_seconds, sample_rate=sr, clip_mode=clip_mode)
+    return audio.astype(np.float32)
+
+
+def load_audio_bytes(audio_bytes: bytes, sr: int, audio_seconds: int, clip_mode: str) -> np.ndarray:
+    try:
+        audio, loaded_sr = sf.read(io.BytesIO(audio_bytes), dtype="float32")
+        audio = normalize_audio_shape(audio)
+        if loaded_sr != sr:
+            audio = librosa.resample(y=audio, orig_sr=loaded_sr, target_sr=sr)
+    except Exception as exc:
+        raise ValueError(f"无法解析音频字节流: {exc}") from exc
 
     audio = truncate_audio(audio, n_seconds=audio_seconds, sample_rate=sr, clip_mode=clip_mode)
     return audio.astype(np.float32)
@@ -175,6 +189,31 @@ class AudioClassifierInfer:
                 label: float(prob_list[i]) for i, label in enumerate(self.labels)
             },
         }
+
+    def predict_audio(self, audio: np.ndarray, source: str = "memory") -> Dict[str, Any]:
+        logits = self._run_model(audio)
+        probs_2d, preds = process_predictions(logits)
+
+        pred_id = int(preds[0])
+        prob_list = probs_2d[0].tolist()
+
+        return {
+            "audio_path": source,
+            "prediction_id": pred_id,
+            "prediction": self.labels[pred_id],
+            "probabilities": {
+                label: float(prob_list[i]) for i, label in enumerate(self.labels)
+            },
+        }
+
+    def predict_bytes(self, audio_bytes: bytes, source: str = "memory") -> Dict[str, Any]:
+        audio = load_audio_bytes(
+            audio_bytes,
+            sr=self.sampling_rate,
+            audio_seconds=self.audio_seconds,
+            clip_mode=self.clip_mode,
+        )
+        return self.predict_audio(audio, source=source)
 
 
 def main():
