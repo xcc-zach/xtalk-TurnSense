@@ -1,0 +1,8 @@
+# TurnSense GPU 依赖 (仅推理)
+# 前提: 系统已安装 NVIDIA 驱动 + CUDA 12.x Toolkit
+# 用法: pip install -r requirements/gpu.txt
+# 说明: nvidia-cudnn-cu12 会自动安装 cuDNN，无需手动配置
+
+-r base.txt
+onnxruntime-gpu==1.23.2
+nvidia-cudnn-cu12==9.10.2.21

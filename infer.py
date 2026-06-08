@@ -33,6 +33,27 @@ DEFAULT_FRONTEND_CONF = {
     "dither": 0.0,
 }
 
+PCM_FORMAT_ALIASES = {
+    "pcm_s16le": "pcm_s16le",
+    "s16le": "pcm_s16le",
+    "pcm_s16be": "pcm_s16be",
+    "s16be": "pcm_s16be",
+    "pcm_s32le": "pcm_s32le",
+    "s32le": "pcm_s32le",
+    "pcm_f32le": "pcm_f32le",
+    "f32le": "pcm_f32le",
+    "pcm_u8": "pcm_u8",
+    "u8": "pcm_u8",
+}
+
+PCM_FORMAT_SPECS = {
+    "pcm_s16le": (np.dtype("<i2"), 32768.0, 0.0),
+    "pcm_s16be": (np.dtype(">i2"), 32768.0, 0.0),
+    "pcm_s32le": (np.dtype("<i4"), 2147483648.0, 0.0),
+    "pcm_f32le": (np.dtype("<f4"), None, 0.0),
+    "pcm_u8": (np.dtype("u1"), 128.0, 128.0),
+}
+
 
 def truncate_audio(audio_array: np.ndarray, n_seconds: int, sample_rate: int, clip_mode: str) -> np.ndarray:
     max_samples = n_seconds * sample_rate
@@ -77,6 +98,51 @@ def load_audio_bytes(audio_bytes: bytes, sr: int, audio_seconds: int, clip_mode:
             audio = librosa.resample(y=audio, orig_sr=loaded_sr, target_sr=sr)
     except Exception as exc:
         raise ValueError(f"无法解析音频字节流: {exc}") from exc
+
+    audio = truncate_audio(audio, n_seconds=audio_seconds, sample_rate=sr, clip_mode=clip_mode)
+    return audio.astype(np.float32)
+
+
+def load_pcm_bytes(
+    audio_bytes: bytes,
+    input_sr: int,
+    sr: int,
+    audio_seconds: int,
+    clip_mode: str,
+    channels: int = 1,
+    pcm_format: str = "pcm_s16le",
+) -> np.ndarray:
+    if not audio_bytes:
+        raise ValueError("PCM 字节流为空")
+    if input_sr <= 0:
+        raise ValueError("PCM 采样率必须为正整数")
+    if channels <= 0:
+        raise ValueError("PCM 声道数必须为正整数")
+
+    canonical_format = PCM_FORMAT_ALIASES.get(pcm_format.strip().lower())
+    if canonical_format is None:
+        raise ValueError(f"不支持的 PCM 格式: {pcm_format}")
+
+    dtype, scale, offset = PCM_FORMAT_SPECS[canonical_format]
+    sample_width = dtype.itemsize
+    frame_width = sample_width * channels
+    if len(audio_bytes) % frame_width != 0:
+        raise ValueError(
+            f"PCM 字节长度与格式不匹配: format={canonical_format}, channels={channels}, "
+            f"bytes={len(audio_bytes)}"
+        )
+
+    audio = np.frombuffer(audio_bytes, dtype=dtype).astype(np.float32)
+    if offset:
+        audio -= offset
+    if scale is not None:
+        audio /= scale
+
+    if channels > 1:
+        audio = audio.reshape(-1, channels).mean(axis=1)
+
+    if input_sr != sr:
+        audio = librosa.resample(y=audio, orig_sr=input_sr, target_sr=sr)
 
     audio = truncate_audio(audio, n_seconds=audio_seconds, sample_rate=sr, clip_mode=clip_mode)
     return audio.astype(np.float32)
@@ -212,6 +278,25 @@ class AudioClassifierInfer:
             sr=self.sampling_rate,
             audio_seconds=self.audio_seconds,
             clip_mode=self.clip_mode,
+        )
+        return self.predict_audio(audio, source=source)
+
+    def predict_pcm_bytes(
+        self,
+        audio_bytes: bytes,
+        source: str = "memory",
+        input_sr: int = SAMPLING_RATE,
+        channels: int = 1,
+        pcm_format: str = "pcm_s16le",
+    ) -> Dict[str, Any]:
+        audio = load_pcm_bytes(
+            audio_bytes,
+            input_sr=input_sr,
+            sr=self.sampling_rate,
+            audio_seconds=self.audio_seconds,
+            clip_mode=self.clip_mode,
+            channels=channels,
+            pcm_format=pcm_format,
         )
         return self.predict_audio(audio, source=source)
 

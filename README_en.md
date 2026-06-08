@@ -275,7 +275,23 @@ TurnSense provides a standardized repository structure and FP32 / INT8 ONNX mode
 git clone https://github.com/Bairong-Xdynamics/TurnSense.git
 cd TurnSense
 
-pip install -U numpy onnxruntime torch librosa soundfile pandas scikit-learn huggingface_hub
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+`requirements.txt` now installs the CPU-only runtime by default.
+
+To install CPU dependencies explicitly:
+
+```bash
+pip install -r requirements/cpu.txt
+```
+
+For GPU deployment, use:
+
+```bash
+pip install -r requirements/gpu.txt
 ```
 
 ### 2. Download Model Weights
@@ -289,20 +305,23 @@ TurnSense model weights are available on Hugging Face: [brgroup/TurnSense](https
 | FP32 | Full-precision version | Accuracy-first scenarios |
 | INT8 | Quantized version | Deployment-first scenarios |
 
-**Download options:**
+If you run `python service.py` without `--onnx-path`, the service will automatically download the TurnSense 1.1 `INT8` model and `am.mvn` into `models/`.
 
-**Option 1: Automatic download (recommended)**
+Recommended files:
 
-The inference script includes Hugging Face download logic and will automatically download and cache the model during the first run.
+- `TurnSense1.1/model_int8.onnx`
+- `TurnSense1.1/am.mvn`
 
-**Option 2: Git LFS**
+Other download options:
+
+**Option 1: Git LFS**
 
 ```bash
 git lfs install
 git clone https://huggingface.co/brgroup/TurnSense
 ```
 
-**Option 3: Hugging Face Hub**
+**Option 2: Hugging Face Hub**
 
 ```python
 from huggingface_hub import snapshot_download
@@ -312,18 +331,14 @@ snapshot_download(repo_id="brgroup/TurnSense")
 ### 3. Inference
 
 ```bash
-python infer.py
+source .venv/bin/activate
+python service.py
 ```
 
-Example output:
+Health check:
 
-```text
-Loading model from brgroup/TurnSense...
-Running inference on: "I want to ask about that order from yesterday..."
-
-Results:
-  Input: "I want to ask about that order from yesterday..."
-  TurnSense Detection Result: "incomplete"
+```bash
+curl http://127.0.0.1:8000/healthz
 ```
 
 <br/>

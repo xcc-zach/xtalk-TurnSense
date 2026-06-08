@@ -1,14 +1,5 @@
-# TurnSense GPU 依赖 (仅推理)
-# 前提: 系统已安装 NVIDIA 驱动 + CUDA 12.x Toolkit
+# 默认安装 CPU 依赖
 # 用法: pip install -r requirements.txt
-# 说明: nvidia-cudnn-cu12 会自动安装 cuDNN，无需手动配置
+# GPU 部署请改用: pip install -r requirements/gpu.txt
 
-numpy==2.2.6
-librosa==0.11.0
-soundfile==0.13.1
-onnxruntime-gpu==1.23.2
-kaldi-native-fbank==1.22.3
-nvidia-cudnn-cu12==9.10.2.21
-fastapi==0.116.1
-uvicorn[standard]==0.35.0
-python-multipart==0.0.20
+-r requirements/cpu.txt

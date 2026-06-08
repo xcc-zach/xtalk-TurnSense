@@ -1,0 +1,5 @@
+# TurnSense CPU 依赖 (仅推理)
+# 用法: pip install -r requirements/cpu.txt
+
+-r base.txt
+onnxruntime==1.23.2
