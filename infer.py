@@ -90,6 +90,16 @@ def load_audio(audio_path: str, sr: int, audio_seconds: int, clip_mode: str) -> 
     return audio.astype(np.float32)
 
 
+def load_raw_pcm_bytes(audio_bytes: bytes, sr: int, audio_seconds: int, clip_mode: str) -> np.ndarray:
+    if len(audio_bytes) % 2 != 0:
+        raise ValueError("裸 PCM 字节数不是 int16 样本宽度的整数倍")
+
+    audio = np.frombuffer(audio_bytes, dtype="<i2").astype(np.float32)
+    audio = audio / 32768.0
+    audio = truncate_audio(audio, n_seconds=audio_seconds, sample_rate=sr, clip_mode=clip_mode)
+    return audio.astype(np.float32)
+
+
 def load_audio_bytes(audio_bytes: bytes, sr: int, audio_seconds: int, clip_mode: str) -> np.ndarray:
     try:
         audio, loaded_sr = sf.read(io.BytesIO(audio_bytes), dtype="float32")
@@ -97,7 +107,15 @@ def load_audio_bytes(audio_bytes: bytes, sr: int, audio_seconds: int, clip_mode:
         if loaded_sr != sr:
             audio = librosa.resample(y=audio, orig_sr=loaded_sr, target_sr=sr)
     except Exception as exc:
-        raise ValueError(f"无法解析音频字节流: {exc}") from exc
+        try:
+            return load_raw_pcm_bytes(
+                audio_bytes,
+                sr=sr,
+                audio_seconds=audio_seconds,
+                clip_mode=clip_mode,
+            )
+        except ValueError as pcm_exc:
+            raise ValueError(f"无法解析音频字节流: {exc}; 裸 PCM 解析也失败: {pcm_exc}") from exc
 
     audio = truncate_audio(audio, n_seconds=audio_seconds, sample_rate=sr, clip_mode=clip_mode)
     return audio.astype(np.float32)

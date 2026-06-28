@@ -1,38 +1,38 @@
-本 README 为 TurnSense 服务一键部署和客户端使用说明。[原始 README](./README.original.md)
+This README provides one-click TurnSense service deployment and client usage instructions. [Original README](./README.original.en.md)
 
-## 环境要求
+## Requirements
 
-- Linux 或 macOS
-- Python 3.10 及以上
-- GPU 部署需要已安装 NVIDIA 驱动；无 GPU 时安装脚本会自动切换到 CPU 版 `onnxruntime`
+- Linux or macOS
+- Python 3.10+
+- GPU deployment requires an NVIDIA driver. On machines without a GPU, the installer switches to CPU `onnxruntime` automatically.
 
-## 安装
+## Installation
 
-安装脚本会在当前目录创建 `.venv`，安装依赖，并默认把模型下载到 `models/`。所有 `pip` 安装命令都会关闭 `http_proxy`、`https_proxy`、`HTTP_PROXY`、`HTTPS_PROXY`、`all_proxy`、`ALL_PROXY`。
+The installer creates `.venv`, installs dependencies, and downloads model files to `models/` by default. Every `pip` command runs with `http_proxy`, `https_proxy`, `HTTP_PROXY`, `HTTPS_PROXY`, `all_proxy`, and `ALL_PROXY` unset.
 
 ```bash
 chmod +x install.sh start.sh
 bash install.sh
 ```
 
-如需跳过模型下载：
+Skip model download if needed:
 
 ```bash
 TURNSENSE_SKIP_MODEL_DOWNLOAD=1 bash install.sh
 ```
 
-默认模型路径：
+Default model paths:
 
-- ONNX：`models/model_fp32.onnx`
-- CMVN：`models/am.mvn`
+- ONNX: `models/model_fp32.onnx`
+- CMVN: `models/am.mvn`
 
-## 服务启动
+## Start the Service
 
 ```bash
 bash start.sh --port 8000
 ```
 
-常用环境变量：
+Common environment variables:
 
 ```bash
 TURNSENSE_ONNX_PATH=models/model_fp32.onnx
@@ -42,11 +42,11 @@ TURNSENSE_MAX_WORKERS=4
 TURNSENSE_USE_CUDA=1
 ```
 
-## 客户端请求
+## Client Requests
 
-服务保留现有客户端使用方式，接口包括 `/infer/file`、`/infer/json`、`/infer/bytes`。
+The existing client usage is preserved. The service exposes `/infer/file`, `/infer/json`, and `/infer/bytes`.
 
-### 上传音频文件
+### Upload Audio File
 
 ```bash
 curl -X POST http://127.0.0.1:8000/infer/file \
@@ -67,7 +67,7 @@ curl -X POST http://127.0.0.1:8000/infer/json \
   -d '{"audio_base64":"'"${base64_audio}"'","source":"complete.wav"}'
 ```
 
-### 二进制音频
+### Binary Audio
 
 ```bash
 curl -X POST http://127.0.0.1:8000/infer/bytes \
@@ -76,9 +76,9 @@ curl -X POST http://127.0.0.1:8000/infer/bytes \
   --data-binary @examples/complete.wav
 ```
 
-### 裸 PCM
+### Raw PCM
 
-`/infer/bytes` 也支持发送 16 kHz、单声道、little-endian `int16` 裸 PCM。请求体不需要 WAV 头。
+`/infer/bytes` also accepts 16 kHz, mono, little-endian `int16` raw PCM without a WAV header.
 
 ```bash
 python - <<'PY'
@@ -93,7 +93,7 @@ curl -X POST http://127.0.0.1:8000/infer/bytes \
   --data-binary @/tmp/complete.pcm
 ```
 
-返回示例：
+Example response:
 
 ```json
 {
@@ -108,32 +108,32 @@ curl -X POST http://127.0.0.1:8000/infer/bytes \
 }
 ```
 
-## 压测
+## Performance Testing
 
-先启动服务，再运行压测脚本：
+Start the service first, then run:
 
 ```bash
 source .venv/bin/activate
 python serving/performance_testing.py --url http://127.0.0.1:8000 --concurrency 4 --requests 32
 ```
 
-使用 Hugging Face 数据集 `xcczach/sample-data` 中的测试音频：
+Use audio from the Hugging Face dataset `xcczach/sample-data`:
 
 ```bash
 python serving/performance_testing.py --download-sample-data --concurrency 4 --requests 32
 ```
 
-测试裸 PCM：
+Test raw PCM:
 
 ```bash
 python serving/performance_testing.py --mode raw-pcm --concurrency 4 --requests 32
 ```
 
-### 结果
+### Results
 
-验证环境：Ubuntu Linux 5.15，Python 3.13.9，CPU 为双路 Intel Xeon Gold 6530（128 线程），机器包含 2 张 NVIDIA GeForce RTX 4090（Driver 570.124.06，49140 MiB）。本次服务使用默认启动参数，未设置 `TURNSENSE_USE_CUDA=1`，因此为 CPU provider；服务参数为 `max_concurrency=8`、`max_workers=4`，测试音频为 `examples/complete.wav`，接口为 `/infer/bytes`。
+Validation environment: Ubuntu Linux 5.15, Python 3.13.9, dual Intel Xeon Gold 6530 CPUs with 128 threads, and 2 NVIDIA GeForce RTX 4090 GPUs available (Driver 570.124.06, 49140 MiB each). The service was started with default parameters and without `TURNSENSE_USE_CUDA=1`, so this run used the CPU provider. Service settings were `max_concurrency=8` and `max_workers=4`; test audio was `examples/complete.wav`; endpoint was `/infer/bytes`.
 
-| 并发 | 请求数 | 成功 | 平均延时/s | p50/s | p90/s | 吞吐 samples/s |
+| Concurrency | Requests | Success | Avg latency/s | p50/s | p90/s | Throughput samples/s |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 1 | 16 | 16 | 0.314 | 0.303 | 0.379 | 3.180 |
 | 4 | 16 | 16 | 0.466 | 0.483 | 0.580 | 8.472 |
